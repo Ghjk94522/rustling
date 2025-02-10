@@ -28,6 +28,23 @@ mod my_module {
 
     // TODO: Complete the function as described above.
     // pub fn transformer(input: ???) -> ??? { ??? }
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
+        let mut output: Vec<String> = Vec::new();
+        for inp in input {
+            let mut s = inp.0.clone();
+            match inp.1 {
+                Command::Append(size) => {
+                    for _i in 0..size {
+                        s.push_str("bar");
+                    }
+                }
+                Command::Trim => s = inp.0.trim().to_string(),
+                Command::Uppercase => s = inp.0.to_uppercase()
+            }
+            output.push(s);
+        }
+        output
+    }
 }
 
 fn main() {
@@ -42,6 +59,7 @@ mod tests {
 
     #[test]
     fn it_works() {
+        use super::my_module::transformer;
         let input = vec![
             ("hello".to_string(), Command::Uppercase),
             (" all roads lead to rome! ".to_string(), Command::Trim),
